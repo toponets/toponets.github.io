@@ -55,9 +55,9 @@
 <body>
     <br>
     <center>
-        <span class="near-black" style="font-size:36px;font-weight:bold">TopoNets</span>
+        <span class="near-black" style="font-size:36px;font-weight:bold"><i>TopoNets:</i></span>
         <br>
-		<span class="near-black" style="font-size:36px;font-weight:bold">High-Performing Vision and Language models</span>
+        <span class="near-black" style="font-size:36px;font-weight:bold">High-Performing Vision and Language models</span>
         <br>
         <span class="near-black" style="font-size:36px;font-weight:bold">with Brain-Like Topography</span>
         <br>
@@ -127,36 +127,32 @@
 							Paper
 							</a>
 						</span>-->
-						<span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
-							<a style="vertical-align:sub;color:inherit;text-decoration:none;font-size:15px" href="https://arxiv.org/abs/2306.09344" target="_blank">
-							<i style="padding-right:2px;font-size:20px" class="ai ai-arxiv" aria-hidden="true"></i>
-							Arxiv
-							</a>
-						</span>
-						<span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
-							<a style="color:inherit;text-decoration:none;font-size:15px" href="https://github.com/ssundaram21/dreamsim" target="_blank">
-							<i style="padding-right:2px;font-size:23px" class="fab fa-github" aria-hidden="true"></i>
-							Code
-							</a>
-						</span>
-						<span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
-							<span style="display:inline-flex;padding-top:4.2px">
-							<a style="vertical-align:text-top;color:inherit;text-decoration:none;font-size:15px" href="https://colab.research.google.com/drive/1taEOMzFE9g81D9AwH27Uhy2U82tQGAVI?usp=sharing" target="_blank">
-							<img style="padding-bottom:3px;padding-right:2px;height:18px" src="webpage_assets/colab.png" aria-hidden="true"></img>
-							Colab
-							</span>
-							</a>
-						</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-						<span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
-							<a style="vertical-align:sub;color:inherit;text-decoration:none;font-size:15px" href="#bibtex" target="_self">
-							<i style="padding-right:2px;font-size:20px" class="fa fa-quote-left" aria-hidden="true"></i>
-							Bibtex
-							</a>
-						</span>
+                        <span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
+                            <a style="vertical-align:sub;color:inherit;text-decoration:none;font-size:15px" href="https://arxiv.org/abs/2306.09344" target="_blank">
+                                <i style="padding-right:2px;font-size:20px" class="ai ai-arxiv" aria-hidden="true"></i>
+                                Arxiv pre-print
+                            </a>
+                        </span>
+                        <span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
+                            <a style="color:inherit;text-decoration:none;font-size:15px" href="https://github.com/ssundaram21/dreamsim" target="_blank">
+                                <i style="padding-right:2px;font-size:23px" class="fab fa-github" aria-hidden="true"></i>
+                                Code
+                            </a>
+                        </span>
+                        <span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
+                            <span style="display:inline-flex;padding-top:4.2px">
+                                <a style="vertical-align:text-top;color:inherit;text-decoration:none;font-size:15px" href="https://colab.research.google.com/drive/1taEOMzFE9g81D9AwH27Uhy2U82tQGAVI?usp=sharing" target="_blank">
+                                    <img style="padding-bottom:3px;padding-right:2px;height:18px" src="webpage_assets/colab.png" aria-hidden="true"></img>
+                                    Colab
+                                </a>
+                            </span>
+                        </span>
+                        <span class="bg-near-black f6 no_hover br-pill ph3 pv2 dib" style="vertical-align:top;height:36px">
+                            <a style="vertical-align:sub;color:inherit;text-decoration:none;font-size:15px" href="#bibtex" target="_self">
+                                <i style="padding-right:2px;font-size:20px" class="fa fa-quote-left" aria-hidden="true"></i>
+                                Bibtex
+                            </a>
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -205,27 +201,29 @@
                 
                 <p>Preliminaries:</p>
                 <pre><code class="language-python">from topoloss import TopoLoss
-    from PIL import Image
-    
-    topo_loss = TopoLoss(model, layers: list = [...])
-    loss = topoloss.compute()
-    loss.backward()
-                </code></pre>
-            </div>
-            
-            <!-- Usage Example -->
-            <div class="col" id="example-container" class="code-col" style="flex-direction: column;display:flex;">
-                <p>Usage:</p>
-                <pre><code class="language-python"># Feature extraction
-    img1 = preprocess(Image.open("img1_path"))
-    
-    embedding = model.embed(img1)
-    
-    # Perceptual similarity metric
-    img1 = preprocess(Image.open("img1_path"))
-    img2 = preprocess(Image.open("img2_path"))
-    
-    distance = model(img1, img2)
+import torchvision.models as models
+from topoloss import TopoLoss, LaplacianPyramidLoss
+
+# Load a pre-trained ResNet-18 model
+model = models.resnet18(pretrained=False)
+
+# define where to apply the topo loss
+topo_loss = TopoLoss(
+    losses=[
+        LaplacianPyramidLoss.from_layer(
+            model=model,
+            layer=model.layer3[1].conv2,
+            factor_h=3.0,
+            factor_w=3.0,
+        )
+        ## add more layers here if you want :)
+    ]
+)
+
+# Compute the loss
+loss = topo_loss.compute(model=model)
+loss.backward()
+print(f"Computed topo loss: {loss.item()}")
                 </code></pre>
             </div>
         </div>
