@@ -164,8 +164,8 @@
     </center>
     <br>
 	<p id="teaser-description">
-        <span id="bold">Some interesting point should go here</span> 
-		A tiny summary of what we do and what we find
+        <span id="bold">Some interesting point should go here XX</span> 
+		Schematic shows transformation from unstructed baseline models (left) to organized topographic representations (right) for vision (top) and language models (right). The stacked maps are 3 representative layers (early, mid and late) of the model.
     </p>
 	<br>
     <hr>
@@ -239,12 +239,11 @@ print(f"Computed topo loss: {loss.item()}")
         <div class="container-fluid" id="method-container" align="center" width="900px">
             <div class="row">
                 <div class="col" id="method-figure">
-                    <img class="round" style="width:500px" src="./webpage_assets/method.png">
+                    <img class="round" style="width:500px" src="./webpage_assets/MethodsFigure-1.png">
                 </div>
                 <div class="col" id="method-description">
-                    Our perceptual metric is a pairwise image distance, computed as the cosine distance
-                    between concatenated backbone model features. We train via a hinge loss on image triplets,
-                    training via <a style="color:#f14d68" href="https://arxiv.org/abs/2106.09685">Low-Rank Adaptation (LoRA)</a>.
+                    In vision models, TopoLoss was applied to all convolutional layers within each residual block, while in the language model, TopoLoss was applied to the c_fc module of each Transformer block (highlighted in red).
+                    <a style="color:#f14d68" href="https://arxiv.org/abs/2106.09685">link sample if needed</a>.
                 </div>
             </div>
         </div>
