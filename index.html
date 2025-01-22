@@ -159,13 +159,28 @@
 
     </center>
 
-    <center>
+    <!-- <center>
         <img class="round" style="width:900px" src="./webpage_assets/FigureSchematic.jpg">
-    </center>
+    </center> -->
+<center>
+    <video controls width="640" height="360">
+        <source src="webpage_assets/banner_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</center>
+
+<center>
+    <video controls width="640" height="360">
+        <source src="webpage_assets/combined_modes.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</center>
+
+
     <br>
 	<p id="teaser-description">
         <span id="bold">Some interesting point should go here XX</span> 
-		Schematic shows transformation from unstructed baseline models (left) to organized topographic representations (right) for vision (top) and language models (right). The stacked maps are 3 representative layers (early, mid and late) of the model.
+		More interesting things about the video.
     </p>
 	<br>
     <hr>
@@ -178,7 +193,7 @@
         <tbody>
             <tr>
                 <td>
-                    Neurons in the brain are organized such that nearby cells tend to share similar functions. AI models lack this organization, and past efforts to introduce topography have often led to significant trade-offs between topography and task performance. In this work, we present TopoLoss, a new loss function that promotes spatially organized topographic representations in AI models without sacrificing task performance. TopoLoss is highly adaptable and can be seamlessly integrated into the training of leading model architectures. We validate our method on both vision convolutional networks (ResNet-18, ResNet-50) and language transformers (GPT-Neo-125M), collectively TopoNets. TopoNets are the highest-performing topographic models to date, exhibiting brain-like properties such as localized feature processing, lower dimensionality, increased efficiency, and meso-scale interpretability. TopoNets also replicate the key topographic signatures observed in the brain's visual and language cortices, further bridging the gap between biological and artificial systems. This work establishes a robust and generalizable framework for integrating topography into AI, advancing the development of models that more closely emulate the computational strategies of the human brain.
+                    Neurons in the brain are organized such that nearby cells tend to share similar functions. AI models lack this organization, and past efforts to introduce topography have often led to trade-offs between topography and task performance. In this work, we present TopoLoss, a new loss function that promotes spatially organized topographic representations in AI models without significantly sacrificing task performance. TopoLoss is highly adaptable and can be seamlessly integrated into the training of leading model architectures. We validate our method on both vision (ResNet-18, ResNet-50, ViT) and language models (GPT-Neo-125M, NanoGPT), collectively TopoNets. TopoNets are the highest performing supervised topographic models to date, exhibiting brain-like properties such as localized feature processing, lower dimensionality, and increased efficiency. TopoNets also predict responses in the brain and replicate the key topographic signatures observed in the brain’s visual and language cortices, further bridging the gap between biological and artificial systems. This work establishes a robust and generalizable framework for integrating topography into AI, advancing the development of high performing models that more closely emulate the computational strategies of the human brain.
 
                 </td>
             </tr>
@@ -186,6 +201,7 @@
     </table>
     <br>
     <hr>
+
     <center>
         <h1>Installation and Usage</h1>
     </center>
@@ -198,31 +214,20 @@
                 
                 <div style="flex-grow: 1;"></div>
                 
-                <p>Preliminaries:</p>
-                <pre><code class="language-python">from topoloss import TopoLoss
-import torchvision.models as models
-from topoloss import TopoLoss, LaplacianPyramidLoss
+                <p>Usage:</p>
+                <pre><code class="language-python">import torchvision.models as models
+from topoloss import TopoLoss, LaplacianPyramid
 
-# Load a pre-trained ResNet-18 model
-model = models.resnet18(pretrained=False)
+model = models.resnet18(weights = "DEFAULT")
 
-# define where to apply the topo loss
 topo_loss = TopoLoss(
-    losses=[
-        LaplacianPyramidLoss.from_layer(
-            model=model,
-            layer=model.layer3[1].conv2,
-            factor_h=3.0,
-            factor_w=3.0,
-        )
-        ## add more layers here if you want :)
-    ]
+    losses = [
+        LaplacianPyramid(layer_name = 'fc',factor_h=3.0, factor_w=3.0),
+    ],
 )
 
-# Compute the loss
-loss = topo_loss.compute(model=model)
-loss.backward()
-print(f"Computed topo loss: {loss.item()}")
+print(topo_loss.compute(model=model, reduce_mean = True)) ## returns a single number as tensor for backward()
+print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict with layer names as keys
                 </code></pre>
             </div>
         </div>
@@ -230,34 +235,11 @@ print(f"Computed topo loss: {loss.item()}")
     <br>
     <hr>
 
-
     <center>
         <h1>Method</h1>
-    </center>
-
-    <center>
-        <div class="container-fluid" id="method-container" align="center" width="900px">
-            <div class="row">
-                <div class="col" id="method-figure">
-                    <img class="round" style="width:500px" src="./webpage_assets/MethodsFigure-1.png">
-                </div>
-                <div class="col" id="method-description">
-                    In vision models, TopoLoss was applied to all convolutional layers within each residual block, while in the language model, TopoLoss was applied to the c_fc module of each Transformer block (highlighted in red).
-                    <a style="color:#f14d68" href="https://arxiv.org/abs/2106.09685">link sample if needed</a>.
-                </div>
-            </div>
-        </div>
-
-    </center>
-
-    <br>
-    <hr>
-    
-    <center>
-        <h1>Toponets achieve high model performance with comparable spatial topography</h1>
 
         <div class="col" id="method-figure">
-            <img class="round" src="./webpage_assets/FigureAccuracy.png"  style="max-width: 100%; height: auto; object-fit: contain;">
+            <img class="round" src="./webpage_assets/MethodsFigure.png"  style="max-width: 100%; height: auto; object-fit: contain;">
         </div>
         <br>
 
@@ -266,7 +248,32 @@ print(f"Computed topo loss: {loss.item()}")
             <tbody>
                 <tr>
                     <td>
-                    A. Estimated model topography (smoothness, x-axis) versus model performance (y-axis) for vision models (Resnet-18 and Resnet-50). The black filled dots with the dashed gray crosshairs indicate prior models. The dashed black lines indicate the pareto-curves for Resnet-18 and Resnet-50 models. B. Same as A. but for Language models (GPT-Neo-125M). Connected lines indicate model performance for the same model across 2 independent datasets: Openwebtext (lower numbers) and BookCorpus (higher numbers). The y-axis here denotes the language model perplexity score. The dashed gray line indicates the reported topography from a prior study.
+                        [EDIT THIS] In vision models, TopoLoss was applied to all convolutional layers within each residual block, while in the language model, TopoLoss was applied to the c_fc module of each Transformer block (highlighted in red).
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+    
+
+    <br>
+    <hr>
+    
+    <center>
+        <h1>[RESULT 1]Toponets achieve high model performance with comparable spatial topography</h1>
+
+        <div class="col" id="method-figure">
+            <img class="round" src="./webpage_assets/FigureAccuracy-updated.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
+        </div>
+        <br>
+
+        <table align="center" width="900px">
+
+            <tbody>
+                <tr>
+                    <td>
+                    [EDIT THIS]A. Estimated model topography (smoothness, x-axis) versus model performance (y-axis) for vision models (Resnet-18 and Resnet-50). The black filled dots with the dashed gray crosshairs indicate prior models. The dashed black lines indicate the pareto-curves for Resnet-18 and Resnet-50 models. B. Same as A. but for Language models (GPT-Neo-125M). Connected lines indicate model performance for the same model across 2 independent datasets: Openwebtext (lower numbers) and BookCorpus (higher numbers). The y-axis here denotes the language model perplexity score. The dashed gray line indicates the reported topography from a prior study.
                     </td>
                 </tr>
             </tbody>
@@ -277,10 +284,10 @@ print(f"Computed topo loss: {loss.item()}")
     <hr>
 
     <center>
-        <h1>Topography, not model performance, drives dimensionality reductions in toponets. Evidence across model architectures and domains</h1>
+        <h1>[RESULT 2]Topography, not model performance, drives dimensionality reductions in toponets. Evidence across model architectures and domains</h1>
 
         <div class="col" id="method-figure">
-            <img class="round" src="./webpage_assets/FigureDimensionality.png"  style="max-width: 100%; height: auto; object-fit: contain;">
+            <img class="round" src="./webpage_assets/FigureDimensionality.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
         </div>
         <br>
 
@@ -289,7 +296,7 @@ print(f"Computed topo loss: {loss.item()}")
             <tbody>
                 <tr>
                     <td>
-                A. (Left) Model performance (Imagenet accuracy, x-axis) versus effective dimensionality for vision Resnets. (Right) Measured topography (smoothness) versus effective dimensionality for vision Resnets. B. Same as A, but for language transformers                    </td>
+                [EDIT THIS]A. (Left) Model performance (Imagenet accuracy, x-axis) versus effective dimensionality for vision Resnets. (Right) Measured topography (smoothness) versus effective dimensionality for vision Resnets. B. Same as A, but for language transformers                    </td>
                 </tr>
             </tbody>
         </table>
@@ -299,10 +306,10 @@ print(f"Computed topo loss: {loss.item()}")
     <hr>
 
     <center>
-        <h1>Toponets deliver sparse, parameter-efficient representations</h1>
+        <h1>[RESULT 3]Toponets deliver sparse, parameter-efficient representations</h1>
 
         <div class="col" id="method-figure">
-            <img class="round" src="./webpage_assets/FigureEfficiency.png"  style="max-width: 100%; height: auto; object-fit: contain;">
+            <img class="round" src="webpage_assets/nanogpt_sparsity_appendix_page.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
         </div>
         <br>
 
@@ -311,7 +318,7 @@ print(f"Computed topo loss: {loss.item()}")
             <tbody>
                 <tr>
                     <td>
-                        Measuring the efficiency of TopoNets against baseline models: A. Fraction of weights masked through L1 unstructured pruning (x-axis) versus the change in model performance (y-axis) for Resnet-18 (left), Resnet-50 (center), and GPT-Neo-125M (right) models. Colored circles rep- resent TopoNets, while hollow black circles represent baseline models. The performance of the baseline models is shown by the gray line. B. Percentage of model weights after downsampling (x-axis) versus the drop in model performance (y-axis) for GPT-Neo-125M models.                  </td>
+                        [EDIT THIS]Measuring the efficiency of TopoNets against baseline models: A. Fraction of weights masked through L1 unstructured pruning (x-axis) versus the change in model performance (y-axis) for Resnet-18 (left), Resnet-50 (center), and GPT-Neo-125M (right) models. Colored circles rep- resent TopoNets, while hollow black circles represent baseline models. The performance of the baseline models is shown by the gray line. B. Percentage of model weights after downsampling (x-axis) versus the drop in model performance (y-axis) for GPT-Neo-125M models.                  </td>
                 </tr>
             </tbody>
         </table>
@@ -321,7 +328,7 @@ print(f"Computed topo loss: {loss.item()}")
     <hr>
 
     <center>
-        <h1>Paper Figures/Cool Images go here</h1>
+        <h1>Carousel</h1>
     </center>
     <br>
     <table width="900px" border="0" align="center">
@@ -331,32 +338,20 @@ print(f"Computed topo loss: {loss.item()}")
 				    <ol class="carousel-indicators">
                         <li data-target="#nnCarousel" data-slide-to="0" class="active"></li>
                         <li data-target="#nnCarousel" data-slide-to="1"></li>
-                        <li data-target="#nnCarousel" data-slide-to="2"></li>
-                        <li data-target="#nnCarousel" data-slide-to="3"></li>
                     </ol>
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div>
-                                <img class="teaser-img" src="./webpage_assets/MethodsFigure-1.png", style="max-width: 100%; height: auto; object-fit: contain;">
+                                <img class="teaser-img" src="./webpage_assets/ModelBrainMatch_1.png", style="max-width: 100%; height: auto; object-fit: contain;">
                             </div>
                         </div>
                         <div class="carousel-item">
                             <div>
-                                <img class="teaser-img" src="./webpage_assets/figure1.png", style="max-width: 100%; height: auto; object-fit: contain;">
+                                <img class="teaser-img" src="./webpage_assets/ModelBrainMatch_2.png", style="max-width: 100%; height: auto; object-fit: contain;">
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div>
-                                <img class="teaser-img" src="./webpage_assets/efficiency.png", style="max-width: 100%; height: auto; object-fit: contain;">
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div>
-                                <img class="teaser-img" src="./webpage_assets/FigureAccuracy-3.png", style="max-width: 100%; height: auto; object-fit: contain;">
-                            </div>
-                        
-                        </div>
+
                     </div>
 
                     <a class="carousel-control-prev" href="#nnCarousel" role="button" data-slide="prev"
@@ -399,9 +394,6 @@ print(f"Computed topo loss: {loss.item()}")
                 <tr>
                     <td>
                         We thank a bunch of people who helped us out here.
-						<br>
-						<br>
-						This work was supported by XYZ funding info I guesss?
 					</td>
                 </tr>
             </tbody>
@@ -410,16 +402,17 @@ print(f"Computed topo loss: {loss.item()}")
     <br>
     <hr>
     <center>
-        <h1 name="bibtex" id="bibtex">Bibtex</h1>
+        <h1 name="bibtex" id="bibtex">[EDIT THIS]Bibtex</h1>
     </center>
     <div class="col" class="code-col">
         <code style="font-size: 14px;">
             @article{fu2024dreamsim,<br>
-                &ensp;title={DreamSim: Learning New Dimensions of Human Visual Similarity using Synthetic Data},<br>
-                &ensp;author={Fu, Stephanie and Tamir, Netanel and Sundaram, Shobhita and Chai, Lucy and Zhang, Richard and Dekel, Tali and Isola, Phillip},<br>
+                &ensp;title={Toponets: High-Performing Vision and Language models
+                    with Brain-Like Topography},<br>
+                &ensp;author={Fu, Lucy and Zhang, Richard and Dekel, Tali and Isola, Phillip},<br>
                 &ensp;journal={Advances in Neural Information Processing Systems},<br>
                 &ensp;volume={36}<br>
-		&ensp;year={2024}<br>
+		&ensp;year={2025}<br>
               }
         </code>
     </div>
