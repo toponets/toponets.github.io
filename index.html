@@ -169,12 +169,12 @@
     </video>
 </center>
 
-<center>
+<!-- <center>
     <video controls width="640" height="360">
         <source src="webpage_assets/combined_modes.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-</center>
+</center> -->
 
 
     <br>
@@ -233,9 +233,9 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
         </div>
     </div>
     <br>
-    <hr>
+    <!-- <hr> -->
 
-    <center>
+    <!-- <center>
         <h1>Method</h1>
 
         <div class="col" id="method-figure">
@@ -254,14 +254,14 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
             </tbody>
         </table>
 
-    </center>
+    </center> -->
     
 
     <br>
-    <hr>
+    <!-- <hr> -->
     
     <center>
-        <h1>[RESULT 1]Toponets achieve high model performance with comparable spatial topography</h1>
+        <h1>Toponets achieve high performance with comparable spatial topography</h1>
 
         <div class="col" id="method-figure">
             <img class="round" src="./webpage_assets/FigureAccuracy-updated.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
@@ -273,7 +273,7 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
             <tbody>
                 <tr>
                     <td>
-                    [EDIT THIS]A. Estimated model topography (smoothness, x-axis) versus model performance (y-axis) for vision models (Resnet-18 and Resnet-50). The black filled dots with the dashed gray crosshairs indicate prior models. The dashed black lines indicate the pareto-curves for Resnet-18 and Resnet-50 models. B. Same as A. but for Language models (GPT-Neo-125M). Connected lines indicate model performance for the same model across 2 independent datasets: Openwebtext (lower numbers) and BookCorpus (higher numbers). The y-axis here denotes the language model perplexity score. The dashed gray line indicates the reported topography from a prior study.
+                    A. Estimated model topography (smoothness, x-axis) versus model performance (y-axis) for vision models (Resnet-18 and Resnet-50). The black filled dots with the dashed gray crosshairs indicate prior models. The dashed black lines indicate the pareto-curves for Resnet-18 and Resnet-50 models. B. Same as A. but for Language models (GPT-Neo-125M). Connected lines indicate model performance for the same model across 2 independent datasets: Openwebtext (lower numbers) and BookCorpus (higher numbers). The y-axis here denotes the language model perplexity score. The dashed gray line indicates the reported topography from a prior study.
                     </td>
                 </tr>
             </tbody>
@@ -284,10 +284,11 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
     <hr>
 
     <center>
-        <h1>[RESULT 2]Topography, not model performance, drives dimensionality reductions in toponets. Evidence across model architectures and domains</h1>
+        <h1>Topography, not model performance, drives dimensionality reductions</h1>
 
         <div class="col" id="method-figure">
             <img class="round" src="./webpage_assets/FigureDimensionality.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
+
         </div>
         <br>
 
@@ -306,19 +307,19 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
     <hr>
 
     <center>
-        <h1>[RESULT 3]Toponets deliver sparse, parameter-efficient representations</h1>
+        <h1>Toponets deliver sparse, parameter-efficient language models</h1>
 
         <div class="col" id="method-figure">
-            <img class="round" src="webpage_assets/nanogpt_sparsity_appendix_page.jpg"  style="max-width: 100%; height: auto; object-fit: contain;">
+            <img class="round" src="webpage_assets/FigureEfficiencyNanoGPTAppendix.png"  style="max-width: 100%; height: auto; object-fit: contain;">
         </div>
         <br>
 
-        <table align="center" width="900px">
-
+        <table align="center" width="900px">             
+            
             <tbody>
                 <tr>
                     <td>
-                        [EDIT THIS]Measuring the efficiency of TopoNets against baseline models: A. Fraction of weights masked through L1 unstructured pruning (x-axis) versus the change in model performance (y-axis) for Resnet-18 (left), Resnet-50 (center), and GPT-Neo-125M (right) models. Colored circles rep- resent TopoNets, while hollow black circles represent baseline models. The performance of the baseline models is shown by the gray line. B. Percentage of model weights after downsampling (x-axis) versus the drop in model performance (y-axis) for GPT-Neo-125M models.                  </td>
+                        [EDIT THIS] Measuring the efficiency of TopoNets against baseline models: A. Fraction of weights masked through L1 unstructured pruning (x-axis) versus the change in model performance (y-axis) for Resnet-18 (left), Resnet-50 (center), and GPT-Neo-125M (right) models. Colored circles rep- resent TopoNets, while hollow black circles represent baseline models. The performance of the baseline models is shown by the gray line. B. Percentage of model weights after downsampling (x-axis) versus the drop in model performance (y-axis) for GPT-Neo-125M models.                  </td>
                 </tr>
             </tbody>
         </table>
@@ -393,7 +394,7 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
             <tbody>
                 <tr>
                     <td>
-                        We thank a bunch of people who helped us out here.
+                        We thank a bunch of people who helped us out here
 					</td>
                 </tr>
             </tbody>
@@ -406,14 +407,15 @@ print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict wit
     </center>
     <div class="col" class="code-col">
         <code style="font-size: 14px;">
-            @article{fu2024dreamsim,<br>
-                &ensp;title={Toponets: High-Performing Vision and Language models
-                    with Brain-Like Topography},<br>
-                &ensp;author={Fu, Lucy and Zhang, Richard and Dekel, Tali and Isola, Phillip},<br>
-                &ensp;journal={Advances in Neural Information Processing Systems},<br>
-                &ensp;volume={36}<br>
-		&ensp;year={2025}<br>
-              }
+            @inproceedings{<br>
+                deb2025toponets,<br>
+                title={TopoNets: High performing vision and language models with brain-like topography},<br>
+                author={Anonymous},<br>
+                booktitle={The Thirteenth International Conference on Learning Representations},<br>
+                year={2025},<br>
+                url={https://openreview.net/forum?id=THqWPzL00e}
+            }<br>
+        }
         </code>
     </div>
     <br>
