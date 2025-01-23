@@ -161,11 +161,20 @@
     <!-- <center>
         <img class="round" style="width:900px" src="./webpage_assets/FigureSchematic.jpg">
     </center> -->
+
+    <br>
+	<p id="teaser-description">
+        <span id="bold">What happens when you induce brain-like self-similarity into Vision and Language models?</span> 
+        We trained a new class of models with topographic constraints on the weights such that weights that are closer together need to encode similar features.
+    </p>
+	<br>
+
 <center>
     <video autoplay loop controls width="640" height="360">
         <source src="webpage_assets/banner_video.mp4" type="video/mp4">
         <!-- Your browser does not support the video tag. -->
     </video>
+    <p>GPT-Neo-125M when trained with TopoLoss show emergence of category-selective regions</p>
 </center>
 
 <!-- <center>
@@ -175,13 +184,16 @@
     </video>
 </center> -->
 
+<center>
+    <video autoplay loop controls width="600" height="300">
+        <source src="webpage_assets/mnist-colab-demo.mp4" type="video/mp4">
+        <!-- Your browser does not support the video tag. -->
+    </video>
+    <p>We train a simple 2-layer MLP with TopoLoss on the first layer and visualize the selectivity maps for lines of different orientations. Try it out <a href="https://colab.research.google.com/github/toponets/toponets.github.io/blob/main/notebooks/topoloss-demo.ipynb" target="_blank" style="color: blue;">here on colab</a>!</p>
+</center>
 
-    <br>
-	<p id="teaser-description">
-        <span id="bold">Some interesting point should go here XX</span> 
-		More interesting things about the video.
-    </p>
-	<br>
+
+   
     <hr>
 
     <center>
@@ -192,7 +204,7 @@
         <tbody>
             <tr>
                 <td>
-                    Neurons in the brain are organized such that nearby cells tend to share similar functions. AI models lack this organization, and past efforts to introduce topography have often led to trade-offs between topography and task performance. In this work, we present TopoLoss, a new loss function that promotes spatially organized topographic representations in AI models without significantly sacrificing task performance. TopoLoss is highly adaptable and can be seamlessly integrated into the training of leading model architectures. We validate our method on both vision (ResNet-18, ResNet-50, ViT) and language models (GPT-Neo-125M, NanoGPT), collectively TopoNets. TopoNets are the highest performing supervised topographic models to date, exhibiting brain-like properties such as localized feature processing, lower dimensionality, and increased efficiency. TopoNets also predict responses in the brain and replicate the key topographic signatures observed in the brain’s visual and language cortices, further bridging the gap between biological and artificial systems. This work establishes a robust and generalizable framework for integrating topography into AI, advancing the development of high performing models that more closely emulate the computational strategies of the human brain.
+                    Neurons in the brain are organized such that nearby cells tend to share similar functions. AI models lack this organization, and past efforts to introduce topography have often led to trade-offs between topography and task performance. In this work, we present TopoLoss, a new loss function that promotes spatially organized topographic representations in AI models without significantly sacrificing task performance. TopoLoss is highly adaptable and can be seamlessly integrated into the training of leading model architectures. We validate our method on both vision (ResNet-18, ResNet-50, ViT) and language models (GPT-Neo-125M, NanoGPT), collectively TopoNets. TopoNets are the highest performing supervised topographic models to date, exhibiting brain-like properties such as localized feature processing, lower dimensionality, and increased efficiency. TopoNets also predict responses in the brain and replicate the key topographic signatures observed in the brain's visual and language cortices, further bridging the gap between biological and artificial systems. This work establishes a robust and generalizable framework for integrating topography into AI, advancing the development of high performing models that more closely emulate the computational strategies of the human brain.
 
                 </td>
             </tr>
@@ -221,13 +233,19 @@ model = models.resnet18(weights = "DEFAULT")
 
 topo_loss = TopoLoss(
     losses = [
-        LaplacianPyramid(layer_name = 'fc',factor_h=3.0, factor_w=3.0),
+        LaplacianPyramid.from_layer(
+            model=model,
+            layer = model.fc,
+            factor_h=3.0, 
+            factor_w=3.0, 
+            scale = 1.0
+        ),
     ],
 )
+loss = topo_loss.compute(model=model)
+loss.backward()
 
-print(topo_loss.compute(model=model, reduce_mean = True)) ## returns a single number as tensor for backward()
-print(topo_loss.compute(model=model, reduce_mean = False)) ## returns a dict with layer names as keys
-                </code></pre>
+loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
             </div>
         </div>
     </div>
