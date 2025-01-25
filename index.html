@@ -62,9 +62,9 @@
     </style>
     <br>
     <center>
-        <span class="near-black" style="font-size:36px;font-weight:bold">TopoNets: High-Performing Vision and Language models</span>
+        <span class="near-black" style="font-size:36px;font-weight:bold;font-family:'Avenir', sans-serif;">TopoNets: High-Performing Vision and Language models</span>
         <br>
-        <span class="near-black" style="font-size:36px;font-weight:bold">with Brain-Like Topography</span>
+        <span class="near-black" style="font-size:36px;font-weight:bold;font-family:'Avenir', sans-serif;">with Brain-Like Topography</span>
         <br>
 		<!-- <span class="near-black" style="font-size:32px;">Conf name goes here</span> -->
         <br>
@@ -73,17 +73,17 @@
                 <tr>
                     <td align="center" width="215px">
                         <center>
-                            <span style="font-size:22px"><a href="https://mayukhdeb.github.io/"><b>Mayukh Deb</b></a></span>
+                            <span style="font-size:22px"><a href="https://mayukhdeb.github.io/"><b><strong>Mayukh Deb</strong></b></a></span>
                         </center>
                     </td>
                     <td align="center" width="235px">
                         <center>
-                            <span style="font-size:22px"><a href="https://mainakdeb.github.io/"><b>Mainak Deb</b></a></span>
+                            <span style="font-size:22px"><a href="https://mainakdeb.github.io/"><b><strong>Mainak Deb</strong></b></a></span>
                         </center>
                     </td>
                     <td align="center" width="260px">
                         <center>
-                            <span style="font-size:22px"><a href="https://www.murtylab.com"><b>N. Apurva Ratan Murty</b></a></span>
+                            <span style="font-size:22px"><a href="https://www.murtylab.com"><b><strong>N. Apurva Ratan Murty</strong></b></a></span>
                         </center>
                     </td>
                 </tr>
@@ -168,9 +168,18 @@
     </center> -->
 
     <br>
-	<p id="teaser-description">
+    <!-- OLD INTRO -->
+	<!-- <p id="teaser-description">
         <span id="bold">The organization of neurons in the brain is highly structured: neurons with similar functions are located near one another. But what happens when you introduce brain-like self-similarity into vision and language models?</span> 
         We trained a new class of models with topographic constraints on the weights, ensuring that weights closer together encode similar features. These models replicate key topographic signatures observed in the brain's visual and language cortices while achieving lower dimensionality and increased parameter efficiency, all with minimal performance trade-offs.
+    </p> -->
+    <p id="teaser-description">
+        The organization of neurons in the brain is highly structured: neurons performing similar functions are located near one another. This "topographic organization" is a fundamental principle of primate brains and plays an important role in shaping the brain's representations.
+        <br>
+        <br>
+        <span id="bold">Here we introduce TopoLoss, a simple, scalable, and effective method for inducing brain-like topography into leading AI architectures (convolutional networks and transformers) with minimal drop in model performance. The resulting models, TopoNets, are the highest-performing supervised topographic neural networks to date.</span>
+        <br>
+        <br>
     </p>
     
 	<br>
@@ -216,9 +225,11 @@
     </table>
     <br>
     <hr> -->
+    <br>
+    <br>
 
     <center>
-        <h1>Installation and Usage</h1>
+        <h1>TopoLoss is easy to install and use!</h1>
     </center>
     <div class="container-fluid" id="code-container" align="center" width="900px">
         <div class="row">
@@ -238,17 +249,15 @@ topo_loss = TopoLoss(
     losses = [
         LaplacianPyramid.from_layer(
             model=model,
-            layer = model.fc,
-            factor_h=3.0, 
-            factor_w=3.0, 
-            scale = 1.0
+            layer = model.fc, ## layer to apply topoloss on
+            factor_h=8.0, ## equivalent to the downsample factor \phi_h on the paper
+            factor_w=8.0, ## equivalent to the downsample factor \phi_w on the paper
+            scale = 1.0  ## strength, equivalent to "tau" in the paper
         ),
     ],
 )
-loss = topo_loss.compute(model=model)
-loss.backward()
-
-loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
+loss = topo_loss.compute(model=model) ## add this to your training loss during training!
+loss.backward()</code></pre>
             </div>
         </div>
     </div>
