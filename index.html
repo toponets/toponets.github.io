@@ -52,6 +52,14 @@
 </head>
 
 <body>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/chalkduster');
+        @import url('https://fonts.googleapis.com/css2?family=Avenir+Black&display=swap');
+        
+        body {
+            font-family: 'Avenir', sans-serif;
+        }
+    </style>
     <br>
     <center>
         <span class="near-black" style="font-size:36px;font-weight:bold">TopoNets: High-Performing Vision and Language models</span>
@@ -65,20 +73,17 @@
                 <tr>
                     <td align="center" width="215px">
                         <center>
-                            <span style="font-size:22px"><a href="https://mayukhdeb.github.io/">Mayukh Deb
-                                
-                                </span>
+                            <span style="font-size:22px"><a href="https://mayukhdeb.github.io/"><b>Mayukh Deb</b></a></span>
                         </center>
                     </td>
                     <td align="center" width="235px">
                         <center>
-                            <span style="font-size:22px"><a href="https://mainakdeb.github.io/">Mainak Deb</a><sup style="vertical-align: sub;padding-left: 2px"></sup><sup
-                                        style="font-size: 0.7em;"></sup></span>
+                            <span style="font-size:22px"><a href="https://mainakdeb.github.io/"><b>Mainak Deb</b></a></span>
                         </center>
                     </td>
                     <td align="center" width="260px">
                         <center>
-                            <span style="font-size:22px"><a href="https://www.murtylab.com">N. Apurva Ratan Murty</a></span>
+                            <span style="font-size:22px"><a href="https://www.murtylab.com"><b>N. Apurva Ratan Murty</b></a></span>
                         </center>
                     </td>
                 </tr>
@@ -90,7 +95,7 @@
                     <center>
                         <!-- <td style="padding:10px"> -->
                             <div style="padding-top: 28; padding-bottom: 28;">
-                                <sup style="padding-right: 2px;font-size: 18px;top: -0.85em;">1</sup>
+                                <sup style="padding-right: 2px;font-size: 18px;top: -0.85em;"></sup>
                                 <img style="width:70%" src="./webpage_assets/gatech.png">
                             </div>
                         <!-- </td> -->
@@ -164,9 +169,10 @@
 
     <br>
 	<p id="teaser-description">
-        <span id="bold">What happens when you induce brain-like self-similarity into Vision and Language models?</span> 
-        We trained a new class of models with topographic constraints on the weights such that weights that are closer together need to encode similar features.
+        <span id="bold">The organization of neurons in the brain is highly structured: neurons with similar functions are located near one another. But what happens when you introduce brain-like self-similarity into vision and language models?</span> 
+        We trained a new class of models with topographic constraints on the weights, ensuring that weights closer together encode similar features. These models replicate key topographic signatures observed in the brain's visual and language cortices while achieving lower dimensionality and increased parameter efficiency, all with minimal performance trade-offs.
     </p>
+    
 	<br>
 
 
@@ -194,7 +200,7 @@
    
     <hr>
 
-    <center>
+    <!-- <center>
         <h1>Abstract</h1>
     </center>
     <table align="center" width="900px">
@@ -209,7 +215,7 @@
         </tbody>
     </table>
     <br>
-    <hr>
+    <hr> -->
 
     <center>
         <h1>Installation and Usage</h1>
@@ -218,7 +224,6 @@
         <div class="row">
             <!-- PIP Installation and Preliminaries -->
             <div class="col" id="pip-container" class="code-col" style="flex-direction: column;display:flex;">
-                <p>Installation:</p>
                 <pre><code class="language-bash">pip install topoloss</code></pre>
                 
                 <div style="flex-grow: 1;"></div>
@@ -283,7 +288,7 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
         </div>
         <br>
 
-        <table align="center" width="900px">
+        <!-- <table align="center" width="900px">
 
             <tbody>
                 <tr>
@@ -292,7 +297,7 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
 
     </center>
     <br>
@@ -307,7 +312,7 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
         </div>
         <br>
 
-        <table align="center" width="900px">
+        <!-- <table align="center" width="900px">
 
             <tbody>
                 <tr>
@@ -315,7 +320,7 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
                 [EDIT THIS]A. (Left) Model performance (Imagenet accuracy, x-axis) versus effective dimensionality for vision Resnets. (Right) Measured topography (smoothness) versus effective dimensionality for vision Resnets. B. Same as A, but for language transformers                    </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
 
     </center>
     <br>
@@ -334,7 +339,10 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
             <tbody>
                 <tr>
                     <td>
-                        [EDIT THIS] Measuring the efficiency of TopoNets against baseline models: A. Fraction of weights masked through L1 unstructured pruning (x-axis) versus the change in model performance (y-axis) for Resnet-18 (left), Resnet-50 (center), and GPT-Neo-125M (right) models. Colored circles rep- resent TopoNets, while hollow black circles represent baseline models. The performance of the baseline models is shown by the gray line. B. Percentage of model weights after downsampling (x-axis) versus the drop in model performance (y-axis) for GPT-Neo-125M models.                  </td>
+                    We trained a bunch of NanoGPTs with topoloss applied on the `c_fc` modules.
+                    Models with only 20% of the parameters remaining on the on the `c_fc` modules showed no significant drop in performance.
+                    <!-- greek tau --> &tau;=0 indicates the baseline model with no topoloss applied and &tau;=50.0 indicates the model trained with the strongest topoloss.
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -397,19 +405,35 @@ loss_dict = topo_loss.compute(model=model, reduce_mean = False)</code></pre>
             </tr>
         </tbody>
     </table>
+
+
     <br>
     <br>
     <br>
     <br>
     <br>
+
+    <table align="center" width="900px">             
+            
+        <tbody>
+            <tr>
+                <td>
+                    Upon training a resnet18 on ImageNet with topoloss, we observed that face and body selectivities were yoked together, while scene selectivity was distinct. This pattern mimics the organization observed in the FFA, FBA, and PPA in the ventral visual cortex. 
+                    We also confirmed this quantitatively. Face scene selectivity showed a negative correlation (structural similarity = -0.41), whereas face and body selectivity were positively correlated (0.79).
+                    Additionally, TopoNets captured similar organizational biases for real-world size and animacy (structural similarity = 0.46), as seen in the brain.
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <hr>
+
     <center>
         <h1>Acknowledgements</h1>
         <table align="center" width="900px">
             <tbody>
                 <tr>
                     <td>
-                        We thank a bunch of people who helped us out here
+                        We would like to thank Anna Ivanova, Alish Dipani, Taha Binhuraib and everyone at <a href="https://www.murtylab.com" target="_blank" style="color: blue;">Murty lab</a> for their valuable feedback and support.
 					</td>
                 </tr>
             </tbody>
