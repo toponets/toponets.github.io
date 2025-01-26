@@ -251,8 +251,8 @@ topo_loss = TopoLoss(
         LaplacianPyramid.from_layer(
             model=model,
             layer = model.fc, ## layer to apply topoloss on
-            factor_h=8.0, ## equivalent to the downsample factor \phi_h on the paper
-            factor_w=8.0, ## equivalent to the downsample factor \phi_w on the paper
+            factor_h=8.0,
+            factor_w=8.0,
             scale = 1.0  ## strength, equivalent to "tau" in the paper
         ),
     ],
